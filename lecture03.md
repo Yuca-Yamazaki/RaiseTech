@@ -7,12 +7,12 @@
 **APサーバーを終了させた場合引き続きアクセスできるか？**
 - A.アクセスできない
 
-![APS停止時](images_01/apsinactive.png)
+![APS停止時](images01/apsinactive.png)
 
 **APサーバーを再起動した後はどうなるか？**
 - A.アクセスできる
 
-![APS起動時](images_01/apsactive.png)
+![APS起動時](images01/apsactive.png)
 
 ### DBサーバーについて
 **DBサーバーの名前とバージョンは？**
@@ -21,7 +21,7 @@
 **DBサーバーを終了させた場合引き続きアクセスできるか？**
 - A.できない
 
-![DBS停止時](images_01/dbsinactive.png)
+![DBS停止時](images01/dbsinactive.png)
 
 **Railsの構成管理ツールの名前は？**
 - Bundler
