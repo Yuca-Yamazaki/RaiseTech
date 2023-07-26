@@ -23,7 +23,29 @@
 
 ### RDSを作成
 
-![RDS作成](images_lec4/lec04_rds_create.png)
+![RDS作成](images_lec4/lec04_database.png)
+
+- サブネット
+
+![RDSサブネット1](images_lec4/lec04_subnet_1.png)
+
+![RDSサブネット2](images_lec4/lec04_subnet_2.png)
+
+- セキュリティグループ
+
+![RDSセキュリティ](images_lec4/lec04_db.png)
+
+### 追記
+- サブネットをプライベートのみに変更
+- セキュリティをEC2と同じものから、新たに作成した以下のものに変更
+
+|設定項目|項目入力値|
+|---|---|
+|タイプ|MYSQL/Aurora|
+|プロトコル|TCP|
+|ポート範囲|3306|
+|ソース|EC2のセキュリティグループID|
+
 
 ### EC2からRDSへ接続し、正常であることを確認
 - Tera TermのSSHでEC2に接続後、RDSへ接続
@@ -31,7 +53,11 @@
 EC2からRDSへ接続できないエラー
   - →EC2のセキュリティグループIDを設定することにより解決
 
-![RDSへ接続](images_lec4/lec04_rds_login.png)
+### 追記
+
+- EC2から新しく作成したRDSへ接続し、正常であることを確認
+
+![RDSへ接続](images_lec4/lec04_rds_login2.png)
 
 ### 今回の課題から学んだこと
 - ウィザードに沿うことで、作成自体は比較的容易にできる
