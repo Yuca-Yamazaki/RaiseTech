@@ -19,7 +19,7 @@
 ![EC2作成](images_lec4/lec04_ec2_create.png)
 
 
-![セキュリティ](images_lec4/lec04_security2.png)
+![セキュリティ](images_lec4/lec04_ec2_sec.png)
 
 ### RDSを作成
 
