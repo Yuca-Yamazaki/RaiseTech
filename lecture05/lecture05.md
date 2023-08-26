@@ -9,7 +9,7 @@
 
 ### EC2上にサンプルアプリケーションをデプロイ
 
-#### 1.組み込みサーバーのみで起動
+**1.組み込みサーバーのみで起動**
 - Railsアプリを動かせるように環境構築をする
 - 動作環境
 
@@ -25,9 +25,9 @@
 - パッケージのアップデート
 
 
-```
-$ sudo yum -y update
-```
+ ```
+ $ sudo yum -y update
+ ```
 
 - 必要なパッケージをインストール
 
@@ -38,13 +38,13 @@ $ sudo yum -y install git curl make gcc-c++ patch openssl-devel libyaml-devel li
 - Node(17.9.1)をインストール
 
 ```
-#ノードバージョンマネージャー(nvm)をインストール
+# ノードバージョンマネージャー(nvm)をインストール
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | bash
 
-#nvmを有効化
+# nvmを有効化
 $ . ~/.nvm/nvm.sh
 
-#任意のバージョンのNode.jsをインストール
+# 任意のバージョンのNode.jsをインストール
 $ nvm install 17.9.1
 ```
 
@@ -57,16 +57,16 @@ $ npm install --global yarn
 - Ruby(3.1.2)をインストール
 
 ```
-rbenvをインストール
+# rbenvをインストール
 $ git clone https://github.com/sstephenson/rbenv.git ~/.rbenv
 $ echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >> ~/.bash_profile
 $ echo 'eval "$(rbenv init -)"' >> ~/.bash_profile
 $ source ~/.bash_profile
 
-ruby-buildをインストール
+# ruby-buildをインストール
 $ git clone https://github.com/sstephenson/ruby-build.git ~/.rbenv/plugins/ruby-build
 
-rubyをインストール
+# rubyをインストール
 $ rbenv install -v 3.1.2
 $ rbenv global 3.1.2
 $ rbenv rehash
@@ -88,27 +88,27 @@ $ gem install bundler -v 2.3.14
 - サンプルアプリケーションのクローン
 
 ```
-#クローンしてくるアプリの保存先を作成
+# クローンしてくるアプリの保存先を作成
 $ sudo mkdir /var/www/
 
-#作成したディレクトリの権限をec2-userに変更
+# 作成したディレクトリの権限をec2-userに変更
 $ sudo chown ec2-user /var/www/
 
-#アプリをクローンするディレクトリに移動
+# アプリをクローンするディレクトリに移動
 $ cd /var/www
 
-#サンプルアプリケーションのリポジトリをクローン
+# サンプルアプリケーションのリポジトリをクローン
 $ git clone https://github.com/yuta-ushijima/raisetech-live8-sample-app
 ```
 
 - database.ymlファイルを作成
 
 ```
-#database.ymlファイルを作成
+# database.ymlファイルを作成
 $ cd raisetech-live8-sample-app/config/
 $ cp config/database.yml.sample config/database.yml
 
-#username、password、host、socketを任意の設定にする
+# username、password、host、socketを任意の設定にする
 $ vim database.yml
 username: RDSのユーザー名
 password: RDSのパスワード
@@ -124,20 +124,20 @@ development:
 - MySQLをインストール
 
 ```
-#MariaDBを削除
+# MariaDBを削除
 $ sudo yum remove -y mariadb-libs
 
-#MySQLyumリポジトリを追加
+# MySQLyumリポジトリを追加
 $ sudo yum localinstall https://dev.mysql.com/get/mysql80-community-release-el7-9.noarch.rpm
 
-#MySQLに必要なパッケージを取得
+# MySQLに必要なパッケージを取得
 $ sudo yum install --enablerepo=mysql80-community mysql-community-server
 $ sudo yum install --enablerepo=mysql80-community mysql-community-devel
 ```
 
 - EC2のセキュリティグループのインバウンドルールにTCP ポート3000番を追加可
 
-![TCP3000](lecture05/images_lec5/lec05_security1.png)
+![TCP3000](images_lec5/lec05_security1.png)
 
 - 環境構築
 
@@ -154,43 +154,43 @@ $ bundle exec rails server -b 0.0.0.0 -p 3000
 
 - EC2インスタンスのパブリックIPアドレスを使用してブラウザからアプリケーションにアクセス
 
-![Puma1](lecture05/images_lec5/lec05_puma1.png)
+![Puma1](images_lec5/lec05_puma1.png)
 
-![Puma2](lecture05/images_lec5/lec05_puma2.png)
+![Puma2](images_lec5/lec05_puma2.png)
 
 
-#### 2.Webサーバー（Nginx）とAPサーバー（Unicorn）で起動
+**2.Webサーバー（Nginx）とAPサーバー（Unicorn）で起動**
 
 **Nginxをインストールして起動**
 
 
 - EC2のセキュリティグループのインバウンドルールにHTTP ポート80番を追加可
 
-![HTTP80](lecture05/images_lec5/lec05_security2.png)
+![HTTP80](images_lec5/lec05_security2.png)
 
 - Nginxをインストール
 
 ```
-#amazon-linux-extrasパッケージがインストールされていることを確認
+# amazon-linux-extrasパッケージがインストールされていることを確認
 $ which amazon-linux-extras
 
-#パッケージの確認
+# パッケージの確認
 $ amazon-linux-extras list | grep nginx
 
-#インストール
+# インストール
 $ sudo amazon-linux-extras install -y nginx1
 
-#Nginxの起動
+# Nginxの起動
 $ sudo systemctl start nginx
 
-#起動確認
+# 起動確認
 $ sudo systemctl status nginx
 
-#起動停止
+# 起動停止
 $ sudo systemctl stop nginx
 ```
 
-![Nginx1](lecture05/images_lec5/lec05_nginx1.png)
+![Nginx1](images_lec5/lec05_nginx1.png)
 
 
 **Nginxの設定ファイルを作成**
@@ -227,7 +227,7 @@ server {
 - `unicorn.rb`ファイルを編集
 
 ```
-#configディレクトリにあるunicorn.rbファイルを編集
+# configディレクトリにあるunicorn.rbファイルを編集
 $ cd /var/www/raisetech-live8-sample-app/config/
 $ vim unicorn.rb
 
@@ -239,18 +239,18 @@ pid    '/var/www/raisetech-live8-sample-app/unicorn.pid'
 **NginxとUnicornを起動**
 
 ```
-#Nginxの起動
+# Nginxの起動
 $ sudo systemctl start nginx
 
-#Unicornの起動
+# Unicornの起動
 $ bundle exec unicorn -c config/unicorn.rb -E development
 ```
 
-![Nginx_unicorn1](lecture05/images_lec5/lec05_nginx_unicorn1.png)
+![Nginx_unicorn1](images_lec5/lec05_nginx_unicorn1.png)
 
 - EC2インスタンスのパブリックIPアドレスを使用してブラウザからアプリケーションにアクセス
 
-![Nginx_unicorn2](lecture05/images_lec5/lec05_nginx_unicorn2.png)
+![Nginx_unicorn2](images_lec5/lec05_nginx_unicorn2.png)
 
 
 
@@ -258,19 +258,19 @@ $ bundle exec unicorn -c config/unicorn.rb -E development
 
 - ターゲットグループの作成
 
-![target](lecture05/images_lec5/lec05_target.png)
+![target](images_lec5/lec05_target.png)
 
 - ELB(ALB)用セキュリティグループの作成
 
-![ELB1](lecture05/images_lec5/lec05_elb1.png)
+![ELB1](images_lec5/lec05_elb1.png)
 
 - ロードバランサーの作成
 
-![ELB2](lecture05/images_lec5/lec05_elb2.png)
+![ELB2](images_lec5/lec05_elb2.png)
 
 - ヘルスステータスが healthy になっていることを確認
 
-![ELB3](lecture05/images_lec5/lec05_elb3.png)
+![ELB3](images_lec5/lec05_elb3.png)
 
 -  `development.rb`にELB(ALB)のDNS名を追加
  
@@ -280,18 +280,18 @@ config.hosts << "ELB(ALB)のDNS名"
 
 - ELB(ALB)のDNS名を使用してブラウザからアプリケーションにアクセス
 
-![ELB4](lecture05/images_lec5/lec05_elb4.png)
+![ELB4](images_lec5/lec05_elb4.png)
 
 ### S3を追加
 
 - S3バケットの作成
 
-![bucket](lecture05/images_lec5/lec05_s3_bucket.png)
+![bucket](images_lec5/lec05_s3_bucket.png)
 
 
 - アプリ用のIAMユーザーを作成
 
-![IAM1](lecture05/images_lec5/lec05_s3_iam1.png)
+![IAM1](images_lec5/lec05_s3_iam1.png)
 
 
 - Gemfile を開き `aws-sdk-s3`があることを確認
@@ -299,18 +299,18 @@ config.hosts << "ELB(ALB)のDNS名"
 **S3の設定**
 - アクセスキーとシークレットアクセスキーを取得する
 
-![IAM2](lecture05/images_lec5/lec05_s3_iam2.png)
+![IAM2](images_lec5/lec05_s3_iam2.png)
 
 - `development.yml.enc`ファイルを作成してアクセスキーを設定する
 
 ```
-#ファイルのあるディレクトリへ移動
+# ファイルのあるディレクトリへ移動
 $ cd /var/www/raisetech-live8-sample-app/config/credentials/
 
-#設定ファイルの削除
+# 設定ファイルの削除
 $ rm development.yml.enc
 
-#設定ファイルの作成
+# 設定ファイルの作成
 $ EDITOR=vim rails credentials:edit --environment development
 
 
@@ -320,31 +320,30 @@ aws:
   access_key_id: 作成したアクセスキーID
   secret_access_key: 作成したシークレットアクセスキー
   active_storage_bucket_name: 作成したバケットの名前
-
 ```
 
 - `development.rb`を編集
 
 ```
-#ファイルのあるディレクトリに移動
+# ファイルのあるディレクトリに移動
 $ cd /var/www/raisetech-live8-sample-app/config/environments
 
-#development.rbを編集
+# development.rbを編集
 $ vim development.rb
 
-#localからamazonへ変更
+# localからamazonへ変更
 vconfig.active_storage.service = :amazon
 ```
 
 - NginxとUnicornを再起動
 - ELB(ALB)のDNS名を使用してブラウザからアプリケーションにアクセス
 
-![s3_1](lecture05/images_lec5/lec05_s3_1.png)
+![s3_1](images_lec5/lec05_s3_1.png)
 
 - バケットに画像が保存されていることを確認
 
-![s3_2](lecture05/images_lec5/lec05_s3_2.png)
+![s3_2](images_lec5/lec05_s3_2.png)
 
 ### 構成図の作成
 
-![architecture](lecture05/images_lec5/lec05_architecture.png)
+![architecture](images_lec5/lec05_architecture.png)
